@@ -4,6 +4,7 @@ const cors = require('cors');
 const cookieParser = require("cookie-parser");
 const passport = require('passport');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const authRoutes = require('./routes/auth');
 const commentRoutes = require('./routes/comments');
 const userRoutes = require('./routes/users');
@@ -24,6 +25,14 @@ app.use(
         secret: process.env.JWT_SECRET,
         resave: false,
         saveUninitialized: false,
+        store: MongoStore.create({
+            mongoUrl: process.env.MONGO_URI,
+            collectionName: 'sessions',
+        }),
+        cookie: {
+            secure: process.env.NODE_ENV === 'production', // Только HTTPS в продакшене
+            maxAge: 1000 * 60 * 60 * 24, // 1 день
+        },
     })
 );
 app.use((req, res, next) => {
