@@ -239,7 +239,19 @@ exports.changePasswordWithVerification = async (req, res) => {
 
 
 exports.logout = (req, res) => {
-    res.cookie('token', '', { maxAge: 0 }).json({ message: 'Logged out' });
+    res.clearCookie('connect.sid', {
+        path: '/',
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'None',
+    });
+
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).json({ message: 'Ошибка при выходе' });
+        }
+        res.json({ message: 'Вы вышли из системы' });
+    });
 };
 
 
