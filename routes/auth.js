@@ -34,14 +34,6 @@ router.get(
     }
 );
 
-router.get('/logout', (req, res) => {
-    req.logout(err => {
-        if (err) {
-            console.error('Ошибка при выходе из аккаунта:', err);
-        }
-        res.redirect('/');
-    });
-});
 
 router.get('/user', (req, res) => {
     if (req.isAuthenticated()) {
