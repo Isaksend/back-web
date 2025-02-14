@@ -15,7 +15,10 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-app.use(cors({ credentials: true, origin: process.env.FRONTEND_URL }));
+app.use(cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -30,8 +33,10 @@ app.use(
             collectionName: 'sessions',
         }),
         cookie: {
-            secure: process.env.NODE_ENV === 'production', // Только HTTPS в продакшене
-            maxAge: 1000 * 60 * 60 * 24, // 1 день
+            secure: process.env.NODE_ENV === 'production',
+            httpOnly: true,
+            sameSite: 'None',
+            maxAge: 1000 * 60 * 60 * 24,
         },
     })
 );
