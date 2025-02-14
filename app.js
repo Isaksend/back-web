@@ -40,6 +40,7 @@ app.use(
             sameSite: 'none',
             maxAge: 1000 * 60 * 60 * 24,
         },
+        unset: 'keep'
     })
 );
 app.use((req, res, next) => {

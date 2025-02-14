@@ -238,21 +238,19 @@ exports.changePasswordWithVerification = async (req, res) => {
 };
 
 
-exports.logout = (req, res) => {
-    res.clearCookie('connect.sid', {
-        path: '/',
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'None',
-    });
-
+exports.post('/logout', (req, res) => {
+    console.log("До очистки:", req.cookies);
+    // res.clearCookie('connect.sid', { path: '/' });  <-- временно убираем
+    console.log("После очистки:", req.cookies);
     req.session.destroy((err) => {
         if (err) {
-            return res.status(500).json({ message: 'Ошибка при выходе' });
+            console.error("Ошибка при удалении сессии:", err);
+            return res.status(500).json({ message: "Ошибка выхода" });
         }
-        res.json({ message: 'Вы вышли из системы' });
+        res.json({ message: "Вы успешно вышли" });
     });
-};
+});
+
 
 
 
