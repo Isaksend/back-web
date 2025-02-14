@@ -33,7 +33,7 @@ app.use(
             collectionName: 'sessions',
         }),
         cookie: {
-            secure: process.env.NODE_ENV === 'production',
+            secure: true,
             httpOnly: true,
             sameSite: 'none',
             maxAge: 1000 * 60 * 60 * 24,
@@ -44,6 +44,14 @@ app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
     next();
 });
+
+app.use((req, res, next) => {
+    console.log("КУКИ НА СЕРВЕРЕ:", req.cookies);
+    console.log("ЗАГОЛОВКИ НА СЕРВЕРЕ:", req.headers);
+    next();
+});
+
+
 
 // Подключение Passport
 app.use(passport.initialize());
