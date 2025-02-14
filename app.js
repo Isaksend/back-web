@@ -18,8 +18,8 @@ const app = express();
 app.use(cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -36,8 +36,8 @@ app.use(
         }),
         cookie: {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'None',
+            secure: true,
+            sameSite: 'none',
             maxAge: 1000 * 60 * 60 * 24,
         },
     })
