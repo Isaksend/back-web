@@ -16,7 +16,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
+    origin: process.env.FRONTEND_URL || '*',
     credentials: true,
 }));
 app.use(express.json());
@@ -35,7 +35,7 @@ app.use(
         cookie: {
             secure: process.env.NODE_ENV === 'production',
             httpOnly: true,
-            sameSite: 'None',
+            sameSite: 'none',
             maxAge: 1000 * 60 * 60 * 24,
         },
     })
