@@ -33,9 +33,9 @@ app.use(
             collectionName: 'sessions',
         }),
         cookie: {
-            secure: true,
             httpOnly: true,
-            sameSite: 'none',
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'None',
             maxAge: 1000 * 60 * 60 * 24,
         },
     })
