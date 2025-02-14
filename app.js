@@ -52,6 +52,10 @@ app.use((req, res, next) => {
     console.log("ЗАГОЛОВКИ НА СЕРВЕРЕ:", req.headers);
     next();
 });
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    next();
+});
 
 
 
