@@ -238,9 +238,9 @@ exports.changePasswordWithVerification = async (req, res) => {
 };
 
 
-exports.post('/logout', (req, res) => {
+exports.logout = (req, res) => {
     console.log("До очистки:", req.cookies);
-    // res.clearCookie('connect.sid', { path: '/' });  <-- временно убираем
+    res.clearCookie('connect.sid', { path: '/', httpOnly: true, secure: true, sameSite: 'None' });
     console.log("После очистки:", req.cookies);
     req.session.destroy((err) => {
         if (err) {
@@ -249,7 +249,7 @@ exports.post('/logout', (req, res) => {
         }
         res.json({ message: "Вы успешно вышли" });
     });
-});
+};
 
 
 
